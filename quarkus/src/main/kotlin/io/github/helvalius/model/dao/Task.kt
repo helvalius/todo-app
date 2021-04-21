@@ -1,4 +1,4 @@
-package io.github.helvalius.model
+package io.github.helvalius.model.dao
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -8,11 +8,12 @@ import javax.persistence.Id
 @Entity
 data class Task(
     @Column(nullable = false)
-    val name : String,
+    var name : String,
+
     @Column
-    val description: String?)
+    var description: String?)
 {
     @Id
     @GeneratedValue
-    val id: Long = 0
+    var id: Long = 0
 }
