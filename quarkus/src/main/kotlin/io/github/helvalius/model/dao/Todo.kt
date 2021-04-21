@@ -9,18 +9,36 @@ import javax.persistence.*
  * </p>
  */
 @Entity
-data class Todo  (
-    @Column(nullable = false)
-     var name : String,
-
-    @Column
-    var description : String,
-
-    @OneToMany
-    var tasks : List<Task>
-)  {
+class Todo   {
     @Id
     @GeneratedValue
     var id : Long = 0
 
+    /*
+     name of the Todo. This is required and unique  as this defines the Domain Entity identity.
+     */
+    @Column(nullable = false, unique = true)
+    lateinit var name : String
+
+    @Column
+    lateinit var description : String
+
+    @OneToMany
+    var tasks : List<Task> = listOf()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Todo
+
+        return name.equals(other.name, ignoreCase = true)
+    }
+
+    override fun hashCode(): Int = name.hashCode()
+
+
+    override fun toString(): String {
+        return "$name: '$description', tasks: [$tasks]"
+    }
 }

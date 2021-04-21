@@ -7,6 +7,7 @@ import io.github.helvalius.model.resource.CreateTodoResource
 import mu.KotlinLogging
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
+import javax.persistence.PersistenceException
 import javax.transaction.Transactional
 
 
@@ -23,23 +24,31 @@ class TodoService {
     lateinit var repository: TodoRepository
 
     @Transactional
-    fun createNewTodo(todoResource: CreateTodoResource): Todo {  // TODO change return to transfer class
-        val todo = Todo(
-            name = todoResource.name,
-            description = todoResource.description,
-            tasks = todoResource.tasks.map {
-                Task(name = it.name, description = it.description)
-            }
-        )
-        logger.info("Created new todo {$todo}")
-        repository.persist(todo)
+    fun createNewTodo(todoResource: CreateTodoResource): Todo? {  // TODO change return to transfer class
+        val todo = Todo()
+        todo.name = todoResource.name
+        todo.description = todoResource.description ?: ""
+        todo.tasks = todoResource.tasks.map {
+            Task(name = it.name, description = it.description)
+        }
+
+        try {
+            repository.persistAndFlush(todo)
+            logger.info("Created new todo {$todo}")
+        } catch( e : PersistenceException) {
+            logger.error("Tried to create an already existing todo, use update instead")
+            return null
+        }
         return todo
     }
 
-    fun getOne(id: Long) : Todo =   repository.findById(id)   // TODO change return to transfer class
+    fun getOne(id: Long): Todo =
+        repository.findById(id) ?: throw Exception("Todo ID not found")   // TODO change return to transfer class
+
+    fun getAll(): List<Todo> = repository.findAll().list()
 
     @Transactional
-    fun delete(id:Long) = repository.deleteById(id)
+    fun delete(id: Long) = repository.deleteById(id)
 
 
 }

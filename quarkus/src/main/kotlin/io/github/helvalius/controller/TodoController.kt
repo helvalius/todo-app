@@ -14,7 +14,7 @@ class TodoResource {
     lateinit var todoService: TodoService
 
     @GET
-    fun hello() = "Hello RESTEasy"
+    fun retrieveAll() = todoService.getAll()
 
     @GET
     @Path("{id}")
@@ -24,6 +24,7 @@ class TodoResource {
     @Path("{id}")
     fun deleteTodo(@PathParam("id") id: Long) = todoService.delete(id)
 
+    // TODO: throw exception if create failed or wrap exception to something someone can handle with an advice
     @POST
     fun createNewTodo(@Valid newTodo: CreateTodoResource) = todoService.createNewTodo(newTodo)
 }
