@@ -11,5 +11,4 @@ import javax.enterprise.context.ApplicationScoped
  * </p>
  */
 @ApplicationScoped
-class TodoRepository : PanacheRepository<Todo> {
-}
+class TodoRepository : PanacheRepository<Todo>

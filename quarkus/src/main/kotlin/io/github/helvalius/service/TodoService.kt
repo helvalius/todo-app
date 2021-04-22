@@ -4,6 +4,8 @@ import io.github.helvalius.model.dao.Task
 import io.github.helvalius.model.dao.Todo
 import io.github.helvalius.model.repository.TodoRepository
 import io.github.helvalius.model.resource.CreateTodoResource
+import io.github.helvalius.model.resource.UpdateTodoResource
+import io.quarkus.hibernate.orm.panache.Panache
 import mu.KotlinLogging
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
@@ -25,21 +27,39 @@ class TodoService {
 
     @Transactional
     fun createNewTodo(todoResource: CreateTodoResource): Todo? {  // TODO change return to transfer class
-        val todo = Todo()
-        todo.name = todoResource.name
-        todo.description = todoResource.description ?: ""
-        todo.tasks = todoResource.tasks.map {
-            Task(name = it.name, description = it.description)
-        }
+        val todo =
+            Todo(
+                name = todoResource.name,
+                description = todoResource.description,
+                tasks = todoResource.tasks.map {
+                    Task(name = it.name, description = it.description)
+                })
 
         try {
             repository.persistAndFlush(todo)
             logger.info("Created new todo {$todo}")
-        } catch( e : PersistenceException) {
+        } catch (e: PersistenceException) {
             logger.error("Tried to create an already existing todo, use update instead")
             return null
         }
         return todo
+    }
+
+    @Transactional
+    fun update(id: Long, updatedTodo: UpdateTodoResource): Todo {
+        val todo = Todo(
+            id = updatedTodo.id,
+            name = updatedTodo.name,
+            description = updatedTodo.description,
+            tasks = updatedTodo.tasks.map {
+                Task(
+                    id = it.id,
+                    name = it.name,
+                    description = it.description,
+                )
+            })
+
+        return Panache.getEntityManager().merge(todo)
     }
 
     fun getOne(id: Long): Todo =

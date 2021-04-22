@@ -1,6 +1,8 @@
 plugins {
-    kotlin("jvm") version "1.4.31"
-    kotlin("plugin.allopen") version "1.4.31"
+    kotlin("jvm") version "1.4.32"
+    kotlin("plugin.allopen") version "1.4.32"
+    kotlin("plugin.jpa") version "1.4.32"
+
     id("io.quarkus")
 }
 
@@ -37,6 +39,7 @@ java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 }
+
 
 allOpen {
     annotation("javax.ws.rs.Path")

@@ -1,7 +1,9 @@
 package io.github.helvalius
 
 import io.github.helvalius.model.resource.CreateTodoResource
+import io.github.helvalius.model.resource.UpdateTodoResource
 import io.github.helvalius.service.TodoService
+import org.jboss.resteasy.annotations.Body
 import javax.inject.Inject
 import javax.validation.Valid
 import javax.ws.rs.*
@@ -19,6 +21,10 @@ class TodoResource {
     @GET
     @Path("{id}")
     fun retrieveTodo(@PathParam("id") id: Long) = todoService.getOne(id)
+
+    @PUT
+    @Path("{id}")
+    fun updateTodo(@PathParam("id") id: Long, @Valid updateTodo: UpdateTodoResource) = todoService.update(id, updateTodo)
 
     @DELETE
     @Path("{id}")
