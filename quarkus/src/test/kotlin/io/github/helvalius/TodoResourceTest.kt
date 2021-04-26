@@ -34,14 +34,14 @@ class TodoResourceIntegrationTest {
             .contentType(ContentType.JSON)
             .accept(ContentType.JSON)
             .body(
-                """{ "name": "Test", "description": "Fancy description", "tasks":[{"name":"Subtask"}]}"""
+                """{ "name": "Test123", "description": "Fancy description", "tasks":[{"name":"Subtask"}]}"""
             )
             .`when`().post("/todos")
             .then()
             .assertThat()
             .extract().`as`(Todo::class.java, ObjectMapperType.JACKSON_2)
 
-        assertThat(result.name, equalTo("Test"))
+        assertThat(result.name, equalTo("Test123"))
         assertThat(result.description, equalTo("Fancy description"))
         assertThat(result.tasks.size, equalTo(1))
         assertThat(result.id, notNullValue())
