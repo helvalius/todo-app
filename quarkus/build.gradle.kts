@@ -23,6 +23,7 @@ dependencies {
     implementation("io.quarkus:quarkus-jdbc-postgresql")
     implementation("io.quarkus:quarkus-kotlin")
     implementation("io.quarkus:quarkus-resteasy")
+    implementation("io.quarkus:quarkus-smallrye-openapi")
     implementation("io.quarkus:quarkus-resteasy-jackson")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")  // Added for kotlin
     implementation("io.github.microutils:kotlin-logging:1.12.5")
