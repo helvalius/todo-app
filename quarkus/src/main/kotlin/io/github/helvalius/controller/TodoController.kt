@@ -1,9 +1,9 @@
 package io.github.helvalius
 
-import io.github.helvalius.model.resource.CreateTodoResource
-import io.github.helvalius.model.resource.UpdateTodoResource
+import io.github.helvalius.model.resource.CreateTodoDto
+import io.github.helvalius.model.resource.UpdateTodoDto
 import io.github.helvalius.service.TodoService
-import org.jboss.resteasy.annotations.Body
+import org.eclipse.microprofile.openapi.annotations.Operation
 import javax.inject.Inject
 import javax.validation.Valid
 import javax.ws.rs.*
@@ -24,7 +24,7 @@ class TodoResource {
 
     @PUT
     @Path("{id}")
-    fun updateTodo(@PathParam("id") id: Long, @Valid updateTodo: UpdateTodoResource) = todoService.update(id, updateTodo)
+    fun updateTodo(@PathParam("id") id: Long, @Valid updateTodo: UpdateTodoDto) = todoService.update(id, updateTodo)
 
     @DELETE
     @Path("{id}")
@@ -32,5 +32,5 @@ class TodoResource {
 
     // TODO: throw exception if create failed or wrap exception to something someone can handle with an advice
     @POST
-    fun createNewTodo(@Valid newTodo: CreateTodoResource) = todoService.createNewTodo(newTodo)
+    fun createNewTodo(@Valid newTodo: CreateTodoDto) = todoService.createNewTodo(newTodo)
 }

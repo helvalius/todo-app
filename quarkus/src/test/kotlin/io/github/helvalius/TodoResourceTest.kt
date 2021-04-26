@@ -6,12 +6,12 @@ import org.hamcrest.CoreMatchers.`is`
 import org.junit.jupiter.api.Test
 
 @QuarkusTest
-class GreetingResourceTest {
+class TodoResourceTest {
 
     @Test
     fun testHelloEndpoint() {
         given()
-          .`when`().get("/hello-resteasy")
+          .`when`().get("/todos")
           .then()
              .statusCode(200)
              .body(`is`("Hello RESTEasy"))
