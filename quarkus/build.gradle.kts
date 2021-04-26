@@ -31,6 +31,9 @@ dependencies {
     implementation("io.quarkus:quarkus-arc")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
+    testImplementation("io.mockk:mockk:1.11.0")
+    testImplementation("org.testcontainers:postgresql:1.15.3")
+    testImplementation("org.testcontainers:junit-jupiter:1.15.3")
 }
 
 group = "io.github.helvalius"
