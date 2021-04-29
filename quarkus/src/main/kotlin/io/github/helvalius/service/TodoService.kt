@@ -48,7 +48,7 @@ class TodoService {
     @Transactional
     fun update(id: Long, updatedTodo: UpdateTodoDto): Todo {
         val todo = Todo(
-            id = updatedTodo.id,
+            id = id,
             name = updatedTodo.name,
             description = updatedTodo.description,
             tasks = updatedTodo.tasks.map {
