@@ -22,8 +22,8 @@ data class Todo(
     @Column
     var description: String?,
 
-    @OneToMany(cascade = [CascadeType.ALL])
-    var tasks: List<Task> = listOf()
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "todo", fetch = FetchType.EAGER)
+    var tasks: List<Task> = emptyList()
 
 ) {
 
